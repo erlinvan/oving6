@@ -1,4 +1,4 @@
-__author__ = 'keithd'
+__author__ = 'erling'
 
 from time import sleep
 import random
@@ -71,4 +71,3 @@ def shoot_panorama(camera,motors,shots=5):
         motors.right(0.5,rotation_time)
         im = im.concat_horiz(IMR.Imager(image=camera.update()))
     return im
-
