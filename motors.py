@@ -7,6 +7,7 @@ import wiringpi2 as wp
 class Motors():
     def __init__(self):
         self.setup()
+        print("hei")
 
     def setup(self):
         self.max = 1024
@@ -111,4 +112,3 @@ class Motors():
         if duration:
             sleep(duration)
             self.stop()
-
