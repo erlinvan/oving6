@@ -13,7 +13,7 @@ def main():
     bbcon.add_behavior(obstruction)
     bbcon.add_behavior(photo)
 
-    ZumoButton.wait_for_press(self)
+    ZumoButton().wait_for_press()
 
     while True:
         bbcon.run_one_timestep()
