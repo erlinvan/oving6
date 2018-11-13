@@ -3,7 +3,7 @@ from behavior import *
 from zumo_button import ZumoButton
 
 def main():
-    zb = ZumoButton()
+    
     bbcon = Bbcon()
     lineRider = FollowLine(bbcon)
     obstruction = Obstruction(bbcon)
@@ -13,7 +13,7 @@ def main():
     bbcon.add_behavior(obstruction)
     bbcon.add_behavior(photo)
 
-    zb.wait_for_press()
+    ZumoButton.wait_for_press()
 
     while True:
         bbcon.run_one_timestep()
