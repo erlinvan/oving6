@@ -277,7 +277,7 @@ class Behavior:
 
 class Approach(Behavior): #UV-behaviour
     def __init__(self, bbcon):
-        super(Behavior).__init__()
+        super().__init__(bbcon)
         self.sensobs.append(LookAhead()) #UV
         self.active_flag=True
         self.bbcon.active_behav.append(self)
