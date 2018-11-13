@@ -1,72 +1,68 @@
-import random
-from Sensob import *
-from arbitrator import *
-from behavior import *
-from Wheels import *
-import basic_robot.imager2 as IMR
-from basic_robot.reflectance_sensors import ReflectanceSensors
-from basic_robot.camera import Camera
-from basic_robot.motors import Motors
-from basic_robot.ultrasonic import Ultrasonic
-from basic_robot.zumo_button import ZumoButton
+from arbitrator import Arbitrator
 from time import sleep
+from motob import Motob
+from behavior import Photo
 
-class BBCON:
+class Bbcon:
+
     def __init__(self):
-        self.behaviors = []
-        self.active_behaviors = []
-        self.inactive_behaviors = []
-        self.sensobs = []
-        self.motobs = []
-        self.current_timestep = 0
-        self.arbitrator = Arbitrator(self, False)
-        self.camera_activate = False
+        self.behaviors = []                     #Liste over alle behaviors, aktive og inaktive
+        self.active_behaviors = []              # Kun aktive behaviors
+        self.sensobs = []                       # Liste over sensorer
+        self.motobs = Motob(self)               # Liste med motorobjekter
+        self.arbitrator = Arbitrator()          # Arbitrator-objektet, velger winning behavior
+        self.num_timesteps = 0                  # Hvor mange timesteps som er kjørt
+        self.can_take_photo = False
 
-        # Adds all behaviors to the BBCON
-        self.add_behavior(UV_behavior(self))
-        self.add_behavior(camera_behavior(self))
-        self.add_behavior(proximity_behavior(self))
 
-        # Adds all the sensobs used by the behaviors to the BBCON
-        for behavior in self.behaviors:
-            for sensob in behavior.sensobs:
-                if sensob not in self.sensobs:
-                    self.add_sensob(sensob)
-
-        # Adds motob
-        self.motobs = [Wheels()]
-
+    #Trivielt, legger til behavior i listen
     def add_behavior(self, behavior):
-        self.behaviors.append(behavior)
+        if behavior not in self.behaviors:
+            self.behaviors.append(behavior)
 
-    def add_sensob(self, sensob):
-        self.sensobs.append(sensob)
+    # Trivielt, legger til sensor-objekt i listen
+    def add_sensor(self, sensor):
+        if sensor not in self.sensobs:
+            self.sensobs.append(sensor)
 
+    # Legger til behavior i listen over active-behaviors
     def activate_behavior(self, behavior):
-        if behavior not in self.active_behaviors:
+        if behavior in self.behaviors:
             self.active_behaviors.append(behavior)
 
+    # Fjerner aktive behaviors fra active-behaviors listen
     def deactivate_behavior(self, behavior):
         if behavior in self.active_behaviors:
-            self.active_behaviors.pop(behavior)
+            self.active_behaviors.remove(behavior)
 
+    # Resetter dersom bilde allerede er tatt
+    def photo_taken(self):
+        self.can_take_photo = False
+        self.motobs.photograph = False
+
+    # loopen til klassen
     def run_one_timestep(self):
-        for i in range(len(self.sensobs)):
-            self.sensobs[i].update()
-        for j in range(len(self.behaviors)):
-            self.behaviors[j].update()
-        self.motobs[0].update(self.arbitrator.choose_action().motor_rec)
-        sleep(0.4)
-        for sensob in self.sensobs:
-            sensob.reset()
+        # Oppdaterer behaviors
+        for behaviour in self.behaviors:
+            behaviour.update()
 
-def main():
-    bbcon = BBCON()
-    x = False
-    ZumoButton().wait_for_press()
-    while   x == False:
-        bbcon.run_one_timestep()
-        print(bbcon.active_behaviors)
+        # Henter ut motor-recommendations
+        print("Active behaviors", self.active_behaviors)
+        motor_recoms = self.arbitrator.choose_action(self.active_behaviors)
 
-if __name__ == '__main__':
-    main()
+        # Oppdaterer motobs
+        self.motobs.update(motor_recoms)
+
+        if self.motobs.photograph:
+            self.can_take_photo = True
+
+        # vent slik at motorene kan gjøre tingen sin
+        sleep(0.25)
+
+        # Reset sensorverdiene
+        for sensor in self.sensobs:
+            sensor.reset()
+
+        self.active_behaviors=[]
+
+        self.num_timesteps += 1
