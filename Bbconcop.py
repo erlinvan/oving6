@@ -75,7 +75,7 @@ class Arbitrator:
 
     def __init__(self, bbcon, stochastic):
         self.bbcon = bbcon #skulle ha pointer til bbcon
-        self.stochastic = stochastic #boolean som velger om vi velger høyest vekt eller random
+        self.stochastic = stochastic #boolean som velger om vi velger hoyest vekt eller random
 
     def choose_action(self):
         if self.stochastic:
@@ -98,7 +98,7 @@ class Arbitrator:
         sum = 0
         behaviors = {}
 
-        #lager liste men intervaller. intervallene til hver behavior er like stpr som vekten, sånn at sannsynligheten skal gjenspeiles i dette
+        #lager liste men intervaller. intervallene til hver behavior er like stpr som vekten, saann at sannsynligheten skal gjenspeiles i dette
         #[0, 0.5], [0.5, 1.3], [1.3, 2]
         for behavior in self.bbcon.active_behav:
             behaviors[behavior] = [sum, sum + behavior.weight]
@@ -106,7 +106,7 @@ class Arbitrator:
 
         rand_num = random.uniform(0, sum) #finner random tall
         vinner = None
-    #har nå en dictionary med behavior og et tilsvaende intervall, så henter ut høyeste verdien i intervallet (value[1]) og sjekker opp mot random
+    #har naa en dictionary med behavior og et tilsvaende intervall, saa henter ut hoyeste verdien i intervallet (value[1]) og sjekker opp mot random
         for behavior, interval in behaviors.items():
             if interval[1] < rand_num:
                 vinner = behavior
@@ -121,7 +121,7 @@ class Sensob:
         self.sensors = []
         self.value = None
 
-    def update(self): #skal oppdateres en gang hver timestep. Tror det gjøres i en annen klasse
+    def update(self): #skal oppdateres en gang hver timestep. Tror det gjores i en annen klasse
         return
 
     def get_value(self):
@@ -147,7 +147,7 @@ class IR(Sensob):
 
 
     def get_value(self):
-        #True betyr at noe er nært
+        #True betyr at noe er naert
         return self.value
 
     def reset(self):
@@ -165,7 +165,7 @@ class LookAhead(Sensob):
         self.value = self.sensors[0].get_value()
 
 
-    def get_value(self): #trenger jeg å lage denne når den arver?
+    def get_value(self): #trenger jeg aa lage denne naar den arver?
         return self.value
 
     def reset(self):
@@ -181,8 +181,8 @@ class LookAhead(Sensob):
 class CameraSensob(Sensob):
 
     def __init__(self, threshold=0.4, CR=(0.5, 0.25, 0, 0.25)):
-        self.threshold = threshold  #tillatter såså mye slingringsmonn
-        self.CR = CR  # cutratio, hvor mye av bilde som skal kuttes før analyseringa
+        self.threshold = threshold  #tillatter saasaa mye slingringsmonn
+        self.CR = CR  # cutratio, hvor mye av bilde som skal kuttes for analyseringa
         self.sensors = [Camera()]
         self.value = []
 
@@ -192,14 +192,14 @@ class CameraSensob(Sensob):
         width, height = image.size
 
         def wta(p): #get largest pixel, p er en RGB tuppel
-            #x = max(p) #henter ut hvilken som har høyest verdi
-            liste = list(p) #gjør den om til en liste
+            #x = max(p) #henter ut hvilken som har hoyest verdi
+            liste = list(p) #gjor den om til en liste
             #print(liste)
             index = liste.index(max(p))
             rgb = [0,0,0]
             #Setter den korrekte til max og de andre til 0
             rgb[index] = 255
-            return tuple(rgb) #må være en tuppel, ikke en liste
+            return tuple(rgb) #maa vaere en tuppel, ikke en liste
 
 
         for h in range(height):
@@ -212,8 +212,8 @@ class CameraSensob(Sensob):
         for h in range(height):
             for w in range(width):
                 pixel = list(image.getpixel((w,h)))
-                color_count[pixel.index(255)] +=1 #legger til 1 på der det er 255 i pixel
-        #må endre det til hvor mye av det totale bildet det er
+                color_count[pixel.index(255)] +=1 #legger til 1 paa der det er 255 i pixel
+        #maa endre det til hvor mye av det totale bildet det er
         of_total = [0.0, 0.0, 0.0]
         for i in range(len(color_count)):
             total = width*height
@@ -250,7 +250,7 @@ class Behavior:
         self.active_flag = False
         self.halt_request = False
         self.priority = 1.0
-        self.match_degree = 0 #et tall som sier noen om hvor mye de nåværende tilstandene garanterer behavioren
+        self.match_degree = 0 #et tall som sier noen om hvor mye de naavaerende tilstandene garanterer behavioren
         self.weight = self.priority * self.match_degree
 
     def consider_deactivation(self):
