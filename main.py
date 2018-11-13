@@ -1,5 +1,5 @@
 from bbcon import Bbcon
-from behavior import abstractclassmethod
+from behavior import *
 from zumo_button import ZumoButton
 
 def main():
