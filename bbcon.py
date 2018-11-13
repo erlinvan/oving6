@@ -11,7 +11,7 @@ class Bbcon:
         self.sensobs = []                       # Liste over sensorer
         self.motobs = Motob(self)               # Liste med motorobjekter
         self.arbitrator = Arbitrator()          # Arbitrator-objektet, velger winning behavior
-        self.num_timesteps = 0                  # Hvor mange timesteps som er kjørt
+        self.num_timesteps = 0                  # Hvor mange timesteps som er kjort
         self.can_take_photo = False
 
 
@@ -56,7 +56,7 @@ class Bbcon:
         if self.motobs.photograph:
             self.can_take_photo = True
 
-        # vent slik at motorene kan gjøre tingen sin
+        # vent slik at motorene kan gjore tingen sin
         sleep(0.25)
 
         # Reset sensorverdiene

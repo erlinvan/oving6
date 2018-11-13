@@ -1,6 +1,6 @@
 class Arbitrator:
 
-    # Denne klassen velger en winning-behavior som returneres.
+    # Hensikten med denne klassen er å velge den beste behavioren
 
     def choose_action(self, behaviors):
         winning_behavior = None
