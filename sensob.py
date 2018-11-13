@@ -15,7 +15,7 @@ class Sensob:                                      # interface mellom en eller f
         return self.value
 
     @abstractmethod
-    def update(self):                             # tvinger sensorer til å få verdier en gang per iterasjon
+    def update(self):                             # tvinger sensorer til aa faa verdier en gang per iterasjon
         return
 
     def reset(self):

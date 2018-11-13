@@ -7,14 +7,14 @@ class Behavior:
 
     def __init__(self, bbcon):
 
-        self.bbcon = bbcon                                      # bbcon-controlleren hvor behavioren benyttes
-        self.sensobs = []                                       # sensobs-objektene som benyttes
-        self.motor_recommendations = ["none"]                   # motor-recommendation som skal sendes til Arbitrator
+        self.bbcon = bbcon                                      # Selve BBCON-kontrolleren hvor bevarior brukes
+        self.sensobs = []                                       # Sensobs som bruker
+        self.motor_recommendations = ["none"]                   # Motor-recommendation som skal sendes til Arbitrator
         self.active_flag = False                                # er behavior aktiv?
         self.halt_request = False                               # sender melding om at behavior skal stoppe.
-        self.priority = 0                                       # prioriteten til behavior
+        self.priority = 0                                       # Prioriteten til behavior
         self.match_degree = 0                                   # Enten 0 eller 1. Brukes i samsvar med weight og priority.
-        self.weight = self.match_degree * self.priority         # vektingen til behavioren når den benyttes av Arbitrator.
+        self.weight = self.match_degree * self.priority         # vektingen til behavioren naar den benyttes av Arbitrator.
         self.name = ""
 
     # Tester om behavioren skal deaktiveres
@@ -25,7 +25,7 @@ class Behavior:
     def consider_activation(self):
         pass
 
-    # Funksjon som kjøres for å oppdatere behavior
+    # Funksjon som kjores for aa oppdatere behavior
     def update(self):
         pass
 
@@ -33,7 +33,7 @@ class Behavior:
         pass
 
 
-# stopper roboten hvis sensoren detekterer et objekt
+# Stopper roboten hvis sensoren oppdager et objekt
 class Obstruction(Behavior):
 
     def __init__(self, bbcon):
@@ -42,7 +42,7 @@ class Obstruction(Behavior):
         self.u_sensob = UltrasonicSensob()
         self.sensobs.append(self.u_sensob)
 
-    # aktiver behavior hvis sensoren ser noe nærmere enn 10 centimeter
+    # Aktiver behavior hvis sensoren ser noe naermere enn 10 centimeter
     def consider_activation(self):
         val=self.u_sensob.get_value()
         print(val)
@@ -51,7 +51,7 @@ class Obstruction(Behavior):
             self.active_flag = True
             self.halt_request = True
 
-    # DEaktiver behavior hvis sensoren IKKE ser noe nærmere enn 10 centimeter
+    # Deaktiver behavior hvis sensoren IKKE ser noe naermere enn 10 centimeter
     def consider_deactivation(self):
         val = self.u_sensob.get_value()
         print(val)
@@ -83,8 +83,8 @@ class Obstruction(Behavior):
         self.priority = 1
         self.match_degree = 1
 
-        
-# Kjører bare fremover
+
+# Kjorer fremover
 class DriveForward(Behavior):
 
     def __init__(self, bbcon):

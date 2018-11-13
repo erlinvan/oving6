@@ -1,6 +1,6 @@
 class Arbitrator:
 
-    # Hensikten med denne klassen er å velge den beste behavioren
+    # Hensikten med denne klassen er aa velge den beste behavioren
 
     def choose_action(self, behaviors):
         winning_behavior = None
@@ -13,12 +13,12 @@ class Arbitrator:
                 print(behavior.name, " will be recommended")
                 return behavior.motor_recommendations
 
-            # Hvis den ikke skal stoppe velger behavior med høyest weight
+            # Hvis den ikke skal stoppe velger behavior med hoyest weight
             elif behavior.weight > max_weight:
                 max_weight = behavior.weight
                 winning_behavior = behavior
 
-        # Kjører bare fremover hvis ingen behavior ble funnet,
+        # Kjorer bare fremover hvis ingen behavior ble funnet,
         if winning_behavior is None:
             print("Found no behavior, driving forwards")
             return ["f"]

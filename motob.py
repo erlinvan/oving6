@@ -19,7 +19,7 @@ class Motob:
         self.operationlize()
 
     def operationlize(self):
-        # Henter ut første verdi fra anbefalinger, antall grader gis som andre vektor i self.values dersom anbefaling er
+        # Henter ut forste verdi fra anbefalinger, antall grader gis som andre vektor i self.values dersom anbefaling er
         # 'l' eller 'r'
 
         value=self.values[0]
@@ -55,5 +55,5 @@ class Motob:
 
     @staticmethod
     def turn_n_degrees(deg):
-        # Returnerer antall sekunder motorene må kjøres på full speed, henholdsvis frem og bak for å tilsvare grader
+        # Returnerer antall sekunder motorene maa kjores paa full speed, henholdsvis frem og bak for aa tilsvare grader
         return 0.0028 * deg
