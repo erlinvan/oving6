@@ -1,4 +1,4 @@
-from abc import abstractclassmethod
+from abc import *
 from sensob import *
 from imager2 import Imager
 
